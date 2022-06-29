@@ -1,4 +1,9 @@
-# vue-app
+# vue-app + Keycloak
+
+## up keycloak docker dontainer
+```
+docker-compose up
+```
 
 ## Project setup
 ```
