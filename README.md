@@ -1,33 +1,16 @@
-# vue-app + Keycloak
+# VueJs 3 + Keycloak
 
-## up keycloak docker dontainer
+## up keycloak docker container
 ```
 docker-compose up
+
 ```
 
 ## Project setup
 ```
 yarn install
-```
+vue serve
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
 ```
 
 ### Customize configuration
