@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { authConfig } from "./auth.config";
-import { AccessTokenCodeResponse, KeycloakAuth } from "./auth.entities";
+import { KeycloakAuth } from "./auth.entities";
 
 export function createClient(baseUrl: string) {
   const CancelToken = axios.CancelToken;

@@ -2,8 +2,8 @@ import { App } from "vue";
 import { Store } from "vuex";
 import { RouteRecordRaw } from "vue-router";
 
-import authStoreModule from "./auth.store.module"
-import authAxiosPlugin from "./auth.axios.plugin"
+import authStoreModule from "./store/index";
+import authAxiosPlugin from "./auth.axios.plugin";
 import authMessages from "@/plugins/auth-keycloak/auth.messages";
 import { createAuthRouter } from "./auth.router";
 

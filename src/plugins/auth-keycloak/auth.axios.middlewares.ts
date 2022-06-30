@@ -4,6 +4,7 @@ import { Store } from "vuex";
 
 import { axiosConfig } from "./auth.config";
 import { GlobalState } from "./auth.entities";
+import { REFRESH_TOKEN_ASYNC } from "./store/keys";
 
 export function onSendRequestMiddleware(store: Store<GlobalState>): ((value: AxiosRequestConfig<any>) => void | Promise<void>) | undefined {
   return request => {
@@ -17,7 +18,7 @@ export function onFailureMiddleware(store: Store<GlobalState>, router: Router, l
 
   return (failure: AxiosResponse) => {
     if (failure.status == 401 && store.getters.refreshTokenIsValid) {
-      store.dispatch("refreshTokenAsync");
+      store.dispatch(REFRESH_TOKEN_ASYNC);
       if (store.getters.tokenIsValid) {
         failure.request
       }
