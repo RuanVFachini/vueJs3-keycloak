@@ -24,7 +24,7 @@ img:hover {
 import { getKeycloakRedirecUri } from "@/plugins/auth-keycloak/auth.config";
 import { AccessTokenCodeErrorResponse } from "@/plugins/auth-keycloak/auth.entities";
 import { extractAuthParams } from "@/plugins/auth-keycloak/auth.utils";
-import { TOKEN_IS_VALID } from "@/plugins/auth-keycloak/store/getters";
+import { TOKEN_IS_VALID } from "@/plugins/auth-keycloak/store/keys";
 import { MessageApiKey } from "@/shared/setup/keys-injection.setup";
 import { defineComponent, inject } from "vue";
 import { mapGetters } from "vuex";
@@ -46,12 +46,14 @@ export default defineComponent({
   },
   created() {
     const queryParams = extractAuthParams(this.$route);
-    
+
     if (queryParams instanceof AccessTokenCodeErrorResponse) {
-      this.messageApi?.error(queryParams.error_description)
+      this.messageApi?.error(queryParams.error_description);
     } else {
       if (this.tokenIsValid) {
-        const path = this.$store.state.auth.currentUri ? this.$store.state.auth.currentUri : "/";
+        const path = this.$store.state.auth.currentUri
+          ? this.$store.state.auth.currentUri
+          : "/";
         this.$router.push({ path: path });
       }
     }

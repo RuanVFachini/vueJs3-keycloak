@@ -2,7 +2,7 @@ export class AccessTokenCodeResponse {
   code: string;
   session_state: string;
 
-  constructor(code: string,  session_state: string) {
+  constructor(code: string, session_state: string) {
     this.code = code;
     this.session_state = session_state;
   }
@@ -12,7 +12,7 @@ export class AccessTokenCodeErrorResponse {
   error: string;
   error_description: string;
 
-  constructor(error: string,  error_description: string) {
+  constructor(error: string, error_description: string) {
     this.error = error;
     this.error_description = error_description;
   }
@@ -21,6 +21,13 @@ export class AccessTokenCodeErrorResponse {
 export interface KeycloakAuthErro {
   error: string;
   error_description: string;
+}
+
+export class AuthUser {
+  roles: string[];
+  name: string;
+  username: string;
+  email: string;
 }
 
 export class KeycloakAuth {
@@ -33,6 +40,9 @@ export class KeycloakAuth {
   id_token: string;
   notBeforePolicy: number;
   session_state: string;
+  get user(): AuthUser {
+    return extractUser(this.access_token);
+  }
 
   constructor(
     login_time = 0,
@@ -59,9 +69,14 @@ export class KeycloakAuth {
 
 export interface AuthState {
   token: KeycloakAuth;
+  user: null | AuthUser;
   currentUri: string;
 }
 
 export interface GlobalState {
   auth: AuthState
 }
+function extractUser(access_token: string): AuthUser {
+  throw new Error("Function not implemented.");
+}
+
