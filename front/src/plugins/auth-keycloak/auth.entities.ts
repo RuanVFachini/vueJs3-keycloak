@@ -74,9 +74,8 @@ export interface AuthState {
 }
 
 export interface GlobalState {
-  auth: AuthState
+  auth: AuthState;
 }
 function extractUser(access_token: string): AuthUser {
-  throw new Error("Function not implemented.");
+  throw new Error(`Function not implemented. ${access_token}`);
 }
-

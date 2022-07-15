@@ -13,10 +13,10 @@ import MainGrid from "./components/grids/MainGrid.vue";
 export default defineComponent({
   name: "HomeView",
   components: {
-    MainGrid
+    MainGrid,
   },
   created() {
-    provide("domainService", new StudantService(this.$http))
-  }
+    provide("domainService", new StudantService(this.$http));
+  },
 });
 </script>

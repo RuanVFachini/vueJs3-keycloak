@@ -8,10 +8,13 @@ import authMessages from "@/plugins/auth-keycloak/auth.messages";
 import { configureAuthRouter } from "./auth.router";
 
 export default {
-  install(app: App, routes: Array<RouteRecordRaw>, loginRouteName: string): void {
-    
+  install(
+    app: App,
+    routes: Array<RouteRecordRaw>,
+    loginRouteName: string
+  ): void {
     if (!app.config.globalProperties.$store) {
-      throw new Error (authMessages.dependsOnVuex);
+      throw new Error(authMessages.dependsOnVuex);
     }
 
     const router = createRouter({
@@ -26,7 +29,9 @@ export default {
     const store = app.config.globalProperties.$store as Store<any>;
 
     if (!store.state.auth) {
-      const updatedState = Object.assign({}, store.state, {auth: authStoreModule.state});
+      const updatedState = Object.assign({}, store.state, {
+        auth: authStoreModule.state,
+      });
       store.replaceState(updatedState);
     }
 

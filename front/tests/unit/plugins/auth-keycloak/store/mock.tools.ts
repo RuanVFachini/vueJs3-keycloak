@@ -5,7 +5,7 @@ import authStore from "@/plugins/auth-keycloak/store/index";
 export function getStore(state = new StoreTestType()): Store<StoreTestType> {
   const store = createStore<StoreTestType>({
     state: state,
-    modules: {  }
+    modules: {},
   });
   store.registerModule("auth", authStore, { preserveState: true });
   return store;

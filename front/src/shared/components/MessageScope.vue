@@ -10,7 +10,7 @@ import { MessageApiKey } from "../setup/keys-injection.setup";
 export default defineComponent({
   name: "MessageScope",
   created() {
-    this.$http.interceptors
+    this.$http.interceptors;
   },
   setup() {
     provide(MessageApiKey, new MessageApi());

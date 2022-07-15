@@ -1,5 +1,9 @@
 import { RouteLocationNormalized } from "vue-router";
-import { AccessTokenCodeErrorResponse, AccessTokenCodeResponse, AuthUser } from "./auth.entities";
+import {
+  AccessTokenCodeErrorResponse,
+  AccessTokenCodeResponse,
+  AuthUser,
+} from "./auth.entities";
 
 export function hasValues(obj: any | any[]) {
   return obj && Object.values(obj).length ? true : false;
@@ -8,18 +12,22 @@ export function hasValues(obj: any | any[]) {
 export function extractAuthParams(
   to: RouteLocationNormalized
 ): AccessTokenCodeResponse | AccessTokenCodeErrorResponse | null {
-  const query = (to.query as any);
+  const query = to.query as any;
   let params = null;
 
   if (query.code) {
     params = new AccessTokenCodeResponse(query.code, query.session_state);
   } else if (query.error) {
-    params = new AccessTokenCodeErrorResponse(query.error, query.error_description);
+    params = new AccessTokenCodeErrorResponse(
+      query.error,
+      query.error_description
+    );
   }
 
   return params;
 }
 
 export function extractUser(access_token: string): AuthUser {
+  console.log(access_token);
   return new AuthUser();
 }

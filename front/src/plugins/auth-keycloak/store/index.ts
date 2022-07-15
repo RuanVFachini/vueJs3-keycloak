@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { AuthState, AuthUser, KeycloakAuth } from "@/plugins/auth-keycloak/auth.entities";
+import { AuthState, KeycloakAuth } from "@/plugins/auth-keycloak/auth.entities";
 import { mutations } from "./mutations";
 import { getters } from "./getters";
 import { actions } from "./actions";

@@ -1,4 +1,4 @@
-export const authConfig = ({
+export const authConfig = {
   clientId: process.env.VUE_APP_CLIENT_ID,
   clientSecret: process.env.VUE_APP_CLIENT_SECRET,
   authUri: process.env.VUE_APP_AUTH_URI,
@@ -6,7 +6,7 @@ export const authConfig = ({
   scope: process.env.VUE_APP_AUTH_SCOPE,
   redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URI,
   tokenUri: "/token",
-});
+};
 
 export const axiosConfig = {
   headerPrefix: process.env.VUE_APP_AUTH_HEADER_PREFIX + " ",

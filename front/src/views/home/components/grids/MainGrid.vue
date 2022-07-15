@@ -18,29 +18,30 @@
 </template>
 
 <script lang="ts">
-import Studant from '../../entities/studant';
-import StudantService from '../../services/studant.service';
+import Studant from "../../entities/studant";
+import StudantService from "../../services/studant.service";
 
 export default {
-  data() : {service: StudantService, isLoading: boolean, dataTable: Studant[]} {
+  data(): {
+    service: StudantService;
+    isLoading: boolean;
+    dataTable: Studant[];
+  } {
     return {
       isLoading: false,
       dataTable: [],
       service: new StudantService(this.$http),
-    }
+    };
   },
   methods: {
     loadStudants() {
-      this.service.getStudants()
-      .then(x => {
-        this.dataTable = x
+      this.service.getStudants().then((x) => {
+        this.dataTable = x;
         console.log(this.dataTable);
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

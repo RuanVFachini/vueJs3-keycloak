@@ -1,8 +1,13 @@
-import { AccessTokenCodeErrorResponse, AccessTokenCodeResponse } from "@/plugins/auth-keycloak/auth.entities";
-import { extractAuthParams, hasValues } from "@/plugins/auth-keycloak/auth.utils";
+import {
+  AccessTokenCodeErrorResponse,
+  AccessTokenCodeResponse,
+} from "@/plugins/auth-keycloak/auth.entities";
+import {
+  extractAuthParams,
+  hasValues,
+} from "@/plugins/auth-keycloak/auth.utils";
 import { instance, mock, when } from "ts-mockito";
 import { RouteLocationNormalized } from "vue-router";
-
 
 describe("auth-plugin: utils", () => {
   describe("hasValues: false", () => {
@@ -11,7 +16,7 @@ describe("auth-plugin: utils", () => {
       expect(hasValues(value)).toBe(false);
     });
     it("lista vazia", () => {
-      const value = ([] as any[]);
+      const value = [] as any[];
       expect(hasValues(value)).toBe(false);
     });
     it("string vazia", () => {
@@ -51,13 +56,23 @@ describe("auth-plugin: utils", () => {
   describe("extractAuthParams", () => {
     it("auth-code", () => {
       const routeMock = mock<RouteLocationNormalized>();
-      when(routeMock.query).thenReturn({code: "ab123", session_state: "123qwe"});
-      expect(extractAuthParams(instance(routeMock))).toBeInstanceOf(AccessTokenCodeResponse);
+      when(routeMock.query).thenReturn({
+        code: "ab123",
+        session_state: "123qwe",
+      });
+      expect(extractAuthParams(instance(routeMock))).toBeInstanceOf(
+        AccessTokenCodeResponse
+      );
     });
     it("auth-error", () => {
       const routeMock = mock<RouteLocationNormalized>();
-      when(routeMock.query).thenReturn({error: "Failure", error_description: "Description"});
-      expect(extractAuthParams(instance(routeMock))).toBeInstanceOf(AccessTokenCodeErrorResponse);
+      when(routeMock.query).thenReturn({
+        error: "Failure",
+        error_description: "Description",
+      });
+      expect(extractAuthParams(instance(routeMock))).toBeInstanceOf(
+        AccessTokenCodeErrorResponse
+      );
     });
     it("empty", () => {
       const routeMock = mock<RouteLocationNormalized>();

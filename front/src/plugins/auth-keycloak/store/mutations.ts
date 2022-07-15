@@ -10,5 +10,5 @@ export const mutations: MutationTree<AuthState> = {
   },
   [SET_LAST_URI](state, payload: string) {
     state.currentUri = payload;
-  }
-}
+  },
+};

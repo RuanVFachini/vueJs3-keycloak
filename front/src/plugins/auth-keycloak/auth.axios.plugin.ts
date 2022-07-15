@@ -3,10 +3,13 @@ import { Router } from "vue-router";
 import { Store } from "vuex";
 
 import { createClient } from "./auth.axios.intance";
-import { onSendRequestMiddleware, onFailureMiddleware } from "./auth.axios.middlewares";
+import {
+  onSendRequestMiddleware,
+  onFailureMiddleware,
+} from "./auth.axios.middlewares";
 import { GlobalState } from "./auth.entities";
 
-export default  {
+export default {
   install(app: App, loginRouteName: string): void {
     const axiosInstance = createClient();
     app.config.globalProperties.$http = axiosInstance;

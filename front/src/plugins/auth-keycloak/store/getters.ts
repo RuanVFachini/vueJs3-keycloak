@@ -4,7 +4,7 @@ import { TOKEN_IS_VALID, REFRESH_TOKEN_IS_VALID } from "./keys";
 
 export function isExpired(time: number, offsetInSeconds = 0): boolean {
   if (time) {
-    return time + (offsetInSeconds * 1000) < (+new Date());
+    return time + offsetInSeconds * 1000 < +new Date();
   }
   return true;
 }

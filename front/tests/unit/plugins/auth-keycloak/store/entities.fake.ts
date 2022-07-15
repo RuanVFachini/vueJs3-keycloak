@@ -8,7 +8,7 @@ export class StoreTestType {
     this.auth = {
       token: token,
       user: extractUser(token.access_token),
-      currentUri: lastUri
+      currentUri: lastUri,
     };
   }
-};
+}
