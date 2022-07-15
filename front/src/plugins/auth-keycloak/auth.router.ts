@@ -1,23 +1,18 @@
-import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from "vue-router";
+import { NavigationGuardNext, RouteLocationNormalized, Router } from "vue-router";
 import { Store } from "vuex";
 import { AccessTokenCodeResponse, AuthState } from "./auth.entities";
 import authMessages from "./auth.messages";
 import { extractAuthParams, hasValues } from "./auth.utils";
 import { SET_LAST_URI, REFRESH_TOKEN_ASYNC, GET_ACCESS_TOKEN_ASYNC } from "./store/keys";
 
-export function createAuthRouter(routes: RouteRecordRaw[], loginRouteName: string, store: Store<AuthState>) {
-  const index = routes.findIndex(x => x.name == loginRouteName);
+export function configureAuthRouter(router: Router, loginRouteName: string, store: Store<AuthState>) {
+  const index = router.getRoutes().findIndex(x => x.name == loginRouteName);
 
   if (index < 0) {
-    throw new Error(authMessages.invalidLoginRouteName(loginRouteName, routes.map(x => x.name?.toString())));
+    throw new Error(authMessages.invalidLoginRouteName(loginRouteName, router.getRoutes().map(x => x.name?.toString())));
   }
 
-  routes[index].beforeEnter = beforeLoginEnter(store);
-
-  const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes,
-  });
+  router.getRoutes()[index].beforeEnter = beforeLoginEnter(store);
 
   router.beforeEach(beforeEach(loginRouteName, store));
 

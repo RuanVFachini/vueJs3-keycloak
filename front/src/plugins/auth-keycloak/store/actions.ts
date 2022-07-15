@@ -14,7 +14,6 @@ export const actions: ActionTree<AuthState, unknown> = {
   [UPDATE_TOKEN_ASYNC]({ commit }, payload: AuthTokenPromisse) {
     return payload.then(
       (success: AxiosResponse<KeycloakAuth, any>) => {
-        console.log(success);
         const auth = Object.assign({}, success.data, { login_time: +new Date() });
         commit(SET_AUTH, auth);
       },

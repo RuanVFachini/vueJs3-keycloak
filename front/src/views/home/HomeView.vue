@@ -1,14 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../../assets/logo.png" />
-    <router-link to="/login">Login</router-link>
+    <MainGrid />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, provide } from "vue";
+import StudantService from "./services/studant.service";
+
+import MainGrid from "./components/grids/MainGrid.vue";
 
 export default defineComponent({
   name: "HomeView",
+  components: {
+    MainGrid
+  },
+  created() {
+    provide("domainService", new StudantService(this.$http))
+  }
 });
 </script>
