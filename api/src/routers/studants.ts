@@ -10,7 +10,7 @@ studants.push(new Studant(3, "monica"));
 studants.push(new Studant(3, "marina"));
 
 router.get("/", (req: Request, res: Response) => {
-  res.json(studants);
+  return res.json(studants);
 })
 
 export default router;

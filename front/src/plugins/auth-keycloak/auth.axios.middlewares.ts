@@ -22,25 +22,26 @@ export function onFailureMiddleware(
   router: Router,
   loginRouteName: string
 ): ((error: any) => any) | undefined {
-  return (failure: any) => {
-    //AxiosResponse
-    if (failure.status == 401) {
+  return (error: any) => {
+    debugger
+    if (isNetworkError(error)) {
+      const errorMessage = `Network Error: ${error}`;
+      return Promise.reject(new Error(errorMessage));
+    }
+
+    if (error.status == 401) {
       if (store.getters.refreshTokenIsValid) {
         store.dispatch(REFRESH_TOKEN_ASYNC);
         if (store.getters.tokenIsValid) {
-          // failure.request;
-
+          // error.request;
           console.log("fazer request ser executada depis do refresh");
         }
       } else {
         router.push(loginRouteName);
       }
-    } else {
-      if (failure) {
-        console.log(failure);
-      }
-
-      throw new Error("Ocorreu um erro inesperado na requisição");
     }
   };
 }
+
+function isNetworkError ( err ) {
+  return !!err}

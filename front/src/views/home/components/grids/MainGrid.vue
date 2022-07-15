@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import Studant from "../../entities/studant";
 import StudantService from "../../services/studant.service";
 
@@ -34,12 +35,10 @@ export default {
     };
   },
   methods: {
-    loadStudants() {
-      this.service.getStudants().then((x) => {
-        this.dataTable = x;
-        console.log(this.dataTable);
-      });
-    },
+    async loadStudants() {
+      this.dataTable = await this.service.getStudants();
+      console.log(this.dataTable)
+    }
   },
 };
 </script>

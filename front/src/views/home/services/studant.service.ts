@@ -8,14 +8,14 @@ export default class StudantService {
     this.http = axios;
   }
 
-  public getStudants(): Promise<Studant[] | null> {
-    return this.http
-      .get("http://localhost:3000/studants")
-      .then((x) => {
-        return x.data;
-      })
-      .catch(() => {
-        return null;
-      });
+  public getStudants(): Promise<Studant[]> {
+    return this.http.get("http://127.0.0.1:3005/studants")
+    .then(x => {
+      debugger
+      return x.data;
+    }).catch(x => {
+      debugger
+      return[]
+    });
   }
 }

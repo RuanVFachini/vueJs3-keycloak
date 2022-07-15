@@ -17,11 +17,13 @@ export default {
     const store = app.config.globalProperties.$store as Store<GlobalState>;
     const router = app.config.globalProperties.$router as Router;
 
-    axiosInstance.interceptors.request.use(onSendRequestMiddleware(store));
+    axiosInstance.interceptors.request.use(
+      onSendRequestMiddleware(store));
 
     axiosInstance.interceptors.response.use(
-      undefined,
-      onFailureMiddleware(store, router, loginRouteName)
+      x => x,
+      onFailureMiddleware(store, router, loginRouteName),
+      {synchronous: true,}
     );
   },
 };
