@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import axios, { AxiosInstance } from "axios";
 import Studant from "../entities/studant";
 
 export default class StudantService {
@@ -8,14 +8,12 @@ export default class StudantService {
     this.http = axios;
   }
 
-  public getStudants(): Promise<Studant[]> {
-    return this.http.get("http://127.0.0.1:3005/studants")
+  public async getStudants(): Promise<Studant[]> {
+    return await this.http.get("http://localhost:3005/studants")
     .then(x => {
-      debugger
       return x.data;
     }).catch(x => {
-      debugger
-      return[]
+      return []
     });
   }
 }

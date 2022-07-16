@@ -1,29 +1,31 @@
+import axios from "axios";
 import { App } from "vue";
 import { Router } from "vue-router";
 import { Store } from "vuex";
 
-import { createClient } from "./auth.axios.intance";
 import {
-  onSendRequestMiddleware,
-  onFailureMiddleware,
+  onRequestSuccessMiddleware,
+  onRequestErrorMiddleware,
+  onResponseSuccessMiddleware,
+  onResponseErrorMiddleware
 } from "./auth.axios.middlewares";
 import { GlobalState } from "./auth.entities";
 
 export default {
   install(app: App, loginRouteName: string): void {
-    const axiosInstance = createClient();
-    app.config.globalProperties.$http = axiosInstance;
-
+    const axiosInstance = axios.create();
     const store = app.config.globalProperties.$store as Store<GlobalState>;
     const router = app.config.globalProperties.$router as Router;
 
     axiosInstance.interceptors.request.use(
-      onSendRequestMiddleware(store));
+      onRequestSuccessMiddleware(store),
+      onRequestErrorMiddleware);
 
     axiosInstance.interceptors.response.use(
-      x => x,
-      onFailureMiddleware(store, router, loginRouteName),
-      {synchronous: true,}
+      onResponseSuccessMiddleware,
+      onResponseErrorMiddleware(store, router, loginRouteName)
     );
+
+    app.config.globalProperties.$http = axiosInstance;
   },
 };

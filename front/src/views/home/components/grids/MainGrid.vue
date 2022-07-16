@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
 import Studant from "../../entities/studant";
 import StudantService from "../../services/studant.service";
 
@@ -37,7 +36,7 @@ export default {
   methods: {
     async loadStudants() {
       this.dataTable = await this.service.getStudants();
-      console.log(this.dataTable)
+      console.log(this.dataTable);
     }
   },
 };

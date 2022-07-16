@@ -6,29 +6,30 @@ import { axiosConfig } from "./auth.config";
 import { GlobalState } from "./auth.entities";
 import { REFRESH_TOKEN_ASYNC } from "./store/keys";
 
-export function onSendRequestMiddleware(
+export function onRequestSuccessMiddleware(
   store: Store<GlobalState>
-): ((value: AxiosRequestConfig<any>) => void | Promise<void>) | undefined {
-  return (request) => {
-    const headers = request.headers ?? {};
-    headers["Authorization"] =
-      axiosConfig.headerPrefix + store.state.auth.token.access_token;
-    request.headers = headers;
+): (value: AxiosRequestConfig<any>) => AxiosRequestConfig<any> {
+  return (request: AxiosRequestConfig<any>) => {
+    const authorization = (axiosConfig.headerPrefix + store.state.auth.token.access_token);
+    request.headers.common["Authorization"] = authorization;
+    return request
   };
 }
 
-export function onFailureMiddleware(
+export function onRequestErrorMiddleware(error: any) {
+  return Promise.reject(error)
+};
+
+export function onResponseSuccessMiddleware(response: AxiosRequestConfig<any>) : AxiosRequestConfig<any> {
+  return response;
+};
+
+export function onResponseErrorMiddleware(
   store: Store<GlobalState>,
   router: Router,
   loginRouteName: string
-): ((error: any) => any) | undefined {
+): (error: any) => any | undefined {
   return (error: any) => {
-    debugger
-    if (isNetworkError(error)) {
-      const errorMessage = `Network Error: ${error}`;
-      return Promise.reject(new Error(errorMessage));
-    }
-
     if (error.status == 401) {
       if (store.getters.refreshTokenIsValid) {
         store.dispatch(REFRESH_TOKEN_ASYNC);
@@ -39,9 +40,8 @@ export function onFailureMiddleware(
       } else {
         router.push(loginRouteName);
       }
+    } else if (error) {
+      return Promise.reject(error);
     }
   };
 }
-
-function isNetworkError ( err ) {
-  return !!err}

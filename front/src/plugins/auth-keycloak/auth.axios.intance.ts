@@ -2,10 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import { authConfig } from "./auth.config";
 import { KeycloakAuth } from "./auth.entities";
 
-export function createClient() {
-  return axios.create();
-}
-
 export type AuthTokenPromisse = Promise<AxiosResponse<KeycloakAuth>>;
 
 export function createAccessTokenRequest(
