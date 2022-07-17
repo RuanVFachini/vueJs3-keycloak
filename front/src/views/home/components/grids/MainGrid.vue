@@ -1,36 +1,47 @@
 <template>
-  <h1>teste</h1>
-  <button @click="loadStudants">carregar</button>
-  <!-- <n-table :bordered="false" :single-line="false">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Nome</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="">
-        <td>放弃</td>
-        <td>反常的</td>
-      </tr>
-    </tbody>
-  </n-table> -->
+  <n-data-table
+      :columns="columns"
+      :data="dataTable"
+      :pagination="pagination"
+    />
 </template>
 
 <script lang="ts">
-import Studant from "../../entities/studant";
 import StudantService from "../../services/studant.service";
+import { defineComponent } from 'vue'
+import { NDataTable } from "naive-ui";
+
+const createColumns = () => {
+  return [
+    {
+      title: 'Código',
+      key: 'id'
+    },
+    {
+      title: 'Nome',
+      key: 'name'
+    }
+  ]
+};
 
 export default {
-  data(): {
-    service: StudantService;
-    isLoading: boolean;
-    dataTable: Studant[];
-  } {
+  components: {
+    NDataTable
+  },
+  data() {
     return {
       isLoading: false,
       dataTable: [],
       service: new StudantService(this.$http),
+      columns: createColumns(),
+      pagination: {
+        page: 1,
+        pageCount: 1,
+        pageSize: 10,
+        prefix ({ itemCount }) {
+          return `Total is ${itemCount}.`
+        },
+      },
     };
   },
   methods: {
@@ -39,7 +50,11 @@ export default {
       console.log(this.dataTable);
     }
   },
+  created() {
+    this.loadStudants();
+  }
 };
 </script>
 
-<style></style>
+<style>
+</style>

@@ -1,22 +1,34 @@
 <template>
-  <NMessageProvider>
-    <MessageScope>
-      <router-view />
-    </MessageScope>
-  </NMessageProvider>
+  <n-space vertical>
+    <n-layout has-sider>
+      <AppSidebar />
+      <n-layout>
+        <NMessageProvider>
+          <MessageScope>
+            <router-view />
+          </MessageScope>
+        </NMessageProvider>
+      </n-layout>
+    </n-layout>
+  </n-space>
 </template>
 
+
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 import MessageScope from "@/shared/components/MessageScope.vue";
-import { NMessageProvider } from "naive-ui";
+import { NLayout, NMessageProvider, NSpace } from "naive-ui";
+import AppSidebar from "@/shared/components/Sidear.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     NMessageProvider,
     MessageScope,
-  },
+    NSpace,
+    NLayout,
+    AppSidebar
+  }
 });
 </script>
 

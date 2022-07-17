@@ -1,21 +1,24 @@
 import { App } from "vue";
 import { Store } from "vuex";
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 import authStoreModule from "./store/index";
 import authAxiosPlugin from "./auth.axios.plugin";
 import authMessages from "@/plugins/auth-keycloak/auth.messages";
 import { configureAuthRouter } from "./auth.router";
+import { AuthPluginConfig } from "./auth.types";
+import { authConfig } from "./auth.config";
 
 export default {
   install(
     app: App,
-    routes: Array<RouteRecordRaw>,
-    loginRouteName: string
+    config: AuthPluginConfig = new AuthPluginConfig([], "login"),
   ): void {
     if (!app.config.globalProperties.$store) {
       throw new Error(authMessages.dependsOnVuex);
     }
+
+    const routes = config.routes;
 
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
@@ -24,7 +27,7 @@ export default {
 
     app.config.globalProperties.$router = router;
 
-    app.use(authAxiosPlugin, loginRouteName);
+    app.use(authAxiosPlugin, config);
 
     const store = app.config.globalProperties.$store as Store<any>;
 
@@ -37,7 +40,9 @@ export default {
 
     store.registerModule("auth", authStoreModule, { preserveState: true });
 
-    configureAuthRouter(router, loginRouteName, store);
+    if (authConfig.enabled) {
+      configureAuthRouter(router, config.loginRouteName, store);
+    }
 
     app.use(router);
   },

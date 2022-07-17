@@ -10,17 +10,19 @@ export function onRequestSuccessMiddleware(
   store: Store<GlobalState>
 ): (value: AxiosRequestConfig<any>) => AxiosRequestConfig<any> {
   return (request: AxiosRequestConfig<any>) => {
-    const authorization = (axiosConfig.headerPrefix + store.state.auth.token.access_token);
+    const authorization = (
+      axiosConfig.headerPrefix + store.state.auth.token.access_token);
     request.headers.common["Authorization"] = authorization;
-    return request
+    return request;
   };
 }
 
 export function onRequestErrorMiddleware(error: any) {
-  return Promise.reject(error)
+  return Promise.reject(error);
 };
 
-export function onResponseSuccessMiddleware(response: AxiosRequestConfig<any>) : AxiosRequestConfig<any> {
+export function onResponseSuccessMiddleware(
+  response: AxiosRequestConfig<any>) : AxiosRequestConfig<any> {
   return response;
 };
 
