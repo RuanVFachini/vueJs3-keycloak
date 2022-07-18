@@ -4,6 +4,7 @@ import {
   Router,
 } from "vue-router";
 import { Store } from "vuex";
+import { authConfig } from "./auth.config";
 import { AccessTokenCodeResponse, AuthState } from "./auth.entities";
 import authMessages from "./auth.messages";
 import { extractAuthParams, hasValues } from "./auth.utils";
@@ -47,7 +48,7 @@ function beforeEach(loginRouteName: string, store: Store<AuthState>) {
       if (!store.getters.tokenIsValid) {
         if (store.getters.refreshTokenIsValid) {
           await store.dispatch(REFRESH_TOKEN_ASYNC);
-        } else {
+        } else if (authConfig.redirectLogin) {
           return next({ name: loginRouteName });
         }
       }

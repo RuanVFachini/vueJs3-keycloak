@@ -45,8 +45,13 @@ export default {
   },
   methods: {
     async loadStudants() {
-      this.dataTable = await this.service.getStudants();
-      console.log(this.dataTable);
+      const loadingMessage = "Buscando alunos";
+      this.$loading.setMessage(loadingMessage)
+
+      this.dataTable = await this.service.getStudants()
+        .finally(() => {
+          this.$loading.removeMessage(loadingMessage)    
+        });
     }
   },
   created() {

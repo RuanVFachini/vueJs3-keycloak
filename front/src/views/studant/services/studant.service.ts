@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from "axios";
+import { Loading } from "@/shared/entities/loading.entities";
+import { AxiosInstance } from "axios";
 import Studant from "../entities/studant";
 
 export default class StudantService {

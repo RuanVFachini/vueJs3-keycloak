@@ -1,5 +1,6 @@
 <template>
-  <n-space vertical v-if="redirectLogin">
+  <n-space vertical>
+    <GlobalLoading/>
     <n-layout has-sider>
       <AppSidebar />
       <n-layout>
@@ -14,18 +15,17 @@
       </n-layout>
     </n-layout>
   </n-space>
-  <LoginView v-else/>
 </template>
-
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import MessageScope from "@/shared/components/MessageScope.vue";
 import { NLayout, NMessageProvider, NSpace } from "naive-ui";
+
+import MessageScope from "@/shared/components/MessageScope.vue";
 import AppSidebar from "@/shared/components/Sidear.vue";
-import LayoutHeader from './shared/components/LayoutHeader.vue';
-import { authConfig } from './plugins/auth-keycloak/auth.config';
-import LoginView from './views/login/LoginView.vue';
+import LayoutHeader from '@/shared/components/LayoutHeader.vue';
+import GlobalLoading from '@/shared/components/GlobalLoading.vue';
+import { AuthState } from './plugins/auth-keycloak/auth.entities';
 
 export default defineComponent({
   name: "App",
@@ -36,17 +36,34 @@ export default defineComponent({
     NLayout,
     AppSidebar,
     LayoutHeader,
-    LoginView
-},
+    GlobalLoading,
+  },
   computed: {
     pageName(): string  {
       return this.$router.currentRoute.value.name;
-    },
-    redirectLogin() : boolean {
-      return authConfig.redirectLogin;
     }
-  }
+  },
+  created() {
+    this.unwatch = this.$store.watch(
+      (state: AuthState) => state.isRefreshToken,
+      (newValue, oldValue) => {
+        const message = "Recuperando identidade do usuário";
+        if (newValue) {
+          this.$loading.setMessage(message);
+        } else {
+          this.$loading.removeMessage(message);
+        }
+      },
+    );
+  },
+  beforeUnmount() {
+    this.unwatch();
+  },
 });
+
+function mapState(arg0: undefined[]): any {
+throw new Error('Function not implemented.');
+}
 </script>
 
 <style lang="scss">
