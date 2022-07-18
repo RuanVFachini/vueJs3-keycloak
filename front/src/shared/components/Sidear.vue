@@ -1,8 +1,5 @@
 <template>
 <n-space vertical>
-  
-</n-space>
-<div>
   <n-layout-sider
     bordered
     collapse-mode="width"
@@ -14,34 +11,25 @@
     @expand="collapsed = false">
 
     <n-menu
-      :value="value"
       :collapsed="collapsed"
       :collapsed-width="64"
       :collapsed-icon-size="22"
       :options="menuOptions"
       :render-label="renderMenuLabel"
       :render-icon="renderMenuIcon"
-      :expand-icon="expandIcon"/>
+      :expand-icon="expandIcon"
+      :on-update:value="onUpdate"
+      >
+      </n-menu>
   </n-layout-sider>
-</div>
+</n-space>
 </template>
 
 <script lang="ts">
 import { h, defineComponent } from 'vue'
 import { MenuOption, NIcon, NLayoutSider, NMenu, NSpace } from "naive-ui";
 import { BookmarkOutline, CaretDownOutline } from "@vicons/ionicons5";
-import { authConfig } from '@/plugins/auth-keycloak/auth.config';
-
-const menuOptions: MenuOption[] = [
-  {
-    label: 'Home',
-    key: 'home',
-  },
-  {
-    label: 'Login',
-    key: 'login',
-  }
-]
+import { method } from 'lodash';
 
 export default defineComponent({
   name: "App",
@@ -52,9 +40,17 @@ export default defineComponent({
   },
   data() {
     return {
-      value: '',
       collapsed: false,
-      menuOptions: menuOptions,
+      menuOptions: [
+        {
+          label: 'Home',
+          key: 'home',
+        },
+        {
+          label: 'About',
+          key: 'about',
+        }
+      ],
       renderMenuLabel (option: MenuOption) {
         if ('href' in option) {
           return h('a', { href: option.href, target: '_blank' }, [
@@ -71,6 +67,11 @@ export default defineComponent({
       expandIcon () {
         return h(NIcon, null, { default: () => h(CaretDownOutline) })
       },
+    }
+  },
+  methods: {
+    onUpdate (key: string, item: MenuOption) {
+      this.$router.push({name: key});
     }
   }
 });

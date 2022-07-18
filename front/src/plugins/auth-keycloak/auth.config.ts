@@ -5,7 +5,7 @@ export const authConfig = {
   responseType: process.env.VUE_APP_AUTH_RESPONSE_TYPE,
   scope: process.env.VUE_APP_AUTH_SCOPE,
   redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URI,
-  enabled: (process.env.VUE_APP_AUTH_ENABLED == "true"),
+  redirectLogin: (process.env.VUE_APP_AUTH_REDIRECT_LOGIN != "false"),
   tokenUri: "/token",
 };
 

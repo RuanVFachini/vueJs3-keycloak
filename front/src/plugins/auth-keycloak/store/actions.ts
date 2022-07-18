@@ -15,6 +15,7 @@ import {
   UPDATE_TOKEN_ASYNC,
   REFRESH_TOKEN_ASYNC,
   SET_AUTH,
+  SET_IS_REFRESH_TOKEN,
 } from "./keys";
 
 export const actions: ActionTree<AuthState, unknown> = {
@@ -28,6 +29,7 @@ export const actions: ActionTree<AuthState, unknown> = {
     );
   },
   [UPDATE_TOKEN_ASYNC]({ commit }, payload: AuthTokenPromisse) {
+    commit(SET_IS_REFRESH_TOKEN, true);
     return payload.then(
       (success: AxiosResponse<KeycloakAuth, any>) => {
         const auth = Object.assign({}, success.data, {
@@ -38,6 +40,8 @@ export const actions: ActionTree<AuthState, unknown> = {
       (failure) => {
         console.log(`Details: ${failure}`);
       }
-    );
+    ).finally(() => {
+      commit(SET_IS_REFRESH_TOKEN, false);
+    });
   },
 };

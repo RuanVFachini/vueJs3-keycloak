@@ -7,7 +7,6 @@ import authAxiosPlugin from "./auth.axios.plugin";
 import authMessages from "@/plugins/auth-keycloak/auth.messages";
 import { configureAuthRouter } from "./auth.router";
 import { AuthPluginConfig } from "./auth.types";
-import { authConfig } from "./auth.config";
 
 export default {
   install(
@@ -40,9 +39,7 @@ export default {
 
     store.registerModule("auth", authStoreModule, { preserveState: true });
 
-    if (authConfig.enabled) {
-      configureAuthRouter(router, config.loginRouteName, store);
-    }
+    configureAuthRouter(router, config.loginRouteName, store);
 
     app.use(router);
   },

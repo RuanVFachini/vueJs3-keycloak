@@ -1,5 +1,5 @@
 <template>
-  <n-data-table
+  <DefaultGrid
       :columns="columns"
       :data="dataTable"
       :pagination="pagination"
@@ -8,8 +8,7 @@
 
 <script lang="ts">
 import StudantService from "../../services/studant.service";
-import { defineComponent } from 'vue'
-import { NDataTable } from "naive-ui";
+import DefaultGrid from "@/shared/components/DefaultGrid.vue";
 
 const createColumns = () => {
   return [
@@ -26,7 +25,7 @@ const createColumns = () => {
 
 export default {
   components: {
-    NDataTable
+    DefaultGrid
   },
   data() {
     return {

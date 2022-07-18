@@ -9,6 +9,7 @@ export class StoreTestType {
       token: token,
       user: extractUser(token.access_token),
       currentUri: lastUri,
+      isRefreshToken: false,
     };
   }
 }

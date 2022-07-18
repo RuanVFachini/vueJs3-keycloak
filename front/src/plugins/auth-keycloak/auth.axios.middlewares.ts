@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from "axios";
 import { Router } from "vue-router";
 import { Store } from "vuex";
 
-import { axiosConfig } from "./auth.config";
+import { authConfig, axiosConfig } from "./auth.config";
 import { GlobalState } from "./auth.entities";
 import { REFRESH_TOKEN_ASYNC } from "./store/keys";
 
@@ -32,13 +32,13 @@ export function onResponseErrorMiddleware(
   loginRouteName: string
 ): (error: any) => any | undefined {
   return (error: any) => {
-    if (error.status == 401) {
+    if (authConfig.redirectLogin && error.status == 401) {
       if (store.getters.refreshTokenIsValid) {
-        store.dispatch(REFRESH_TOKEN_ASYNC);
-        if (store.getters.tokenIsValid) {
+        //store.dispatch(REFRESH_TOKEN_ASYNC);
+        //if (store.getters.tokenIsValid) {
           // error.request;
-          console.log("fazer request ser executada depis do refresh");
-        }
+        //   console.log("fazer request ser executada depis do refresh");
+        // }
       } else {
         router.push(loginRouteName);
       }

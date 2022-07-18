@@ -9,7 +9,6 @@ import {
   onResponseSuccessMiddleware,
   onResponseErrorMiddleware
 } from "./auth.axios.middlewares";
-import { authConfig } from "./auth.config";
 import { GlobalState } from "./auth.entities";
 import { AuthPluginConfig } from "./auth.types";
 
@@ -19,16 +18,14 @@ export default {
     const store = app.config.globalProperties.$store as Store<GlobalState>;
     const router = app.config.globalProperties.$router as Router;
 
-    if (authConfig.enabled) {
-      axiosInstance.interceptors.request.use(
-        onRequestSuccessMiddleware(store),
-        onRequestErrorMiddleware);
-  
-      axiosInstance.interceptors.response.use(
-        onResponseSuccessMiddleware,
-        onResponseErrorMiddleware(store, router, config.loginRouteName)
-      );
-    }
+    axiosInstance.interceptors.request.use(
+      onRequestSuccessMiddleware(store),
+      onRequestErrorMiddleware);
+
+    axiosInstance.interceptors.response.use(
+      onResponseSuccessMiddleware,
+      onResponseErrorMiddleware(store, router, config.loginRouteName)
+    );
 
     app.config.globalProperties.$http = axiosInstance;
   },

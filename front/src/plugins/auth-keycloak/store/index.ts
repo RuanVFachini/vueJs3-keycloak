@@ -9,6 +9,7 @@ export default {
     token: new KeycloakAuth(),
     user: null,
     currentUri: "",
+    isRefreshToken: false,
   },
   getters: { ...getters },
   mutations: { ...mutations },

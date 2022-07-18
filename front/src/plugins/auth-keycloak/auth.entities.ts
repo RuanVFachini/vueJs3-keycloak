@@ -71,6 +71,7 @@ export interface AuthState {
   token: KeycloakAuth;
   user: null | AuthUser;
   currentUri: string;
+  isRefreshToken: boolean;
 }
 
 export interface GlobalState {

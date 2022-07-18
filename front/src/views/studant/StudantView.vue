@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide } from "vue";
+import { defineComponent } from "vue";
 
 import MainGrid from "./components/grids/MainGrid.vue";
 
 export default defineComponent({
-  name: "HomeView",
+  name: "StudantView",
   components: {
     MainGrid,
   },
