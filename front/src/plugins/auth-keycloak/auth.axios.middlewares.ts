@@ -4,12 +4,13 @@ import { Store } from "vuex";
 
 import { authConfig, axiosConfig } from "./auth.config";
 import { GlobalState } from "./auth.entities";
-import { REFRESH_TOKEN_ASYNC } from "./store/keys";
+// import { REFRESH_TOKEN_ASYNC } from "./store/keys";
 
 export function onRequestSuccessMiddleware(
   store: Store<GlobalState>
 ): (value: AxiosRequestConfig<any>) => AxiosRequestConfig<any> {
   return (request: AxiosRequestConfig<any>) => {
+    
     const authorization = (
       axiosConfig.headerPrefix + store.state.auth.token.access_token);
     request.headers.common["Authorization"] = authorization;

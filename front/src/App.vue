@@ -60,10 +60,6 @@ export default defineComponent({
     this.unwatch();
   },
 });
-
-function mapState(arg0: undefined[]): any {
-throw new Error('Function not implemented.');
-}
 </script>
 
 <style lang="scss">

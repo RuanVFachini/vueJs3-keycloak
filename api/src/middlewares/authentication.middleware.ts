@@ -3,7 +3,11 @@ import { Middleware } from "./types";
 
 export default (): Middleware => {
     return (req: Request, res: Response, next: () => any) => {
-        // const authHeader = req.headers;
+        // const secret = 'secret';
+        // const audience = 'http://myapi/protected';
+        // const issuer = 'http://issuer';
+
+        // const authHeader = req.headers.authorization;
     
         // console.log(authHeader);
     
