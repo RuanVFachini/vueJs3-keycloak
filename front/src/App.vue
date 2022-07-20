@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 import { NLayout, NMessageProvider, NSpace } from "naive-ui";
 
 import MessageScope from "@/shared/components/MessageScope.vue";
