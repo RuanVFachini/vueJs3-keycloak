@@ -12,6 +12,7 @@ import {
   SET_LAST_URI,
   REFRESH_TOKEN_ASYNC,
   GET_ACCESS_TOKEN_ASYNC,
+  IS_AUTHENTICATED,
 } from "./store/keys";
 
 export function configureAuthRouter(
@@ -58,14 +59,27 @@ function beforeEach(loginRouteName: string, store: Store<AuthState>) {
 }
 
 function beforeLoginEnter(store: Store<AuthState>) {
-  return async (to: RouteLocationNormalized) => {
+  return async (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext) => {
+    
     const params = extractAuthParams(to);
 
     if (hasValues(params)) {
       if (params instanceof AccessTokenCodeResponse) {
         await store.dispatch(GET_ACCESS_TOKEN_ASYNC, params);
+        if (!store.getters[IS_AUTHENTICATED]) {
+          return;
+        }
       }
+    } 
+
+    debugger
+    if (!hasValues(params) && store.getters[IS_AUTHENTICATED]) {
+      return next({ path: "/" });
     }
-    return true;
+
+    return next();
   };
 }

@@ -4,17 +4,29 @@ import { Store } from "vuex";
 
 import { authConfig, axiosConfig } from "./auth.config";
 import { GlobalState } from "./auth.entities";
-// import { REFRESH_TOKEN_ASYNC } from "./store/keys";
+import { IS_AUTHENTICATED, REFRESH_TOKEN_ASYNC, TOKEN_IS_VALID,  } from "./store/keys";
 
 export function onRequestSuccessMiddleware(
-  store: Store<GlobalState>
-): (value: AxiosRequestConfig<any>) => AxiosRequestConfig<any> {
-  return (request: AxiosRequestConfig<any>) => {
-    
-    const authorization = (
-      axiosConfig.headerPrefix + store.state.auth.token.access_token);
-    request.headers.common["Authorization"] = authorization;
-    return request;
+  store: Store<GlobalState>,
+  router: Router,
+  loginRouteName: string
+): (request: AxiosRequestConfig<any>) => Promise<AxiosRequestConfig<any>> {
+  return async (request: AxiosRequestConfig<any>) => {
+    if(store.getters[IS_AUTHENTICATED]) {
+      if (!store.getters[TOKEN_IS_VALID]) {
+        await store.dispatch(REFRESH_TOKEN_ASYNC);
+        if (!store.getters[TOKEN_IS_VALID]) {
+          router.push(loginRouteName);    
+        }
+      }
+      
+      const authorization = axiosConfig.headerPrefix + store.state.auth.token.access_token;
+      request.headers.common["Authorization"] = authorization;
+
+      return request;
+    } else {
+      router.push(loginRouteName);
+    }
   };
 }
 
@@ -34,15 +46,7 @@ export function onResponseErrorMiddleware(
 ): (error: any) => any | undefined {
   return (error: any) => {
     if (authConfig.redirectLogin && error.status == 401) {
-      if (store.getters.refreshTokenIsValid) {
-        //store.dispatch(REFRESH_TOKEN_ASYNC);
-        //if (store.getters.tokenIsValid) {
-          // error.request;
-        //   console.log("fazer request ser executada depis do refresh");
-        // }
-      } else {
-        router.push(loginRouteName);
-      }
+      router.push(loginRouteName);
     } else if (error) {
       return Promise.reject(error);
     }

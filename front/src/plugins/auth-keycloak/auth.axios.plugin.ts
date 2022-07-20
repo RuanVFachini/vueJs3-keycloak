@@ -19,7 +19,7 @@ export default {
     const router = app.config.globalProperties.$router as Router;
 
     axiosInstance.interceptors.request.use(
-      onRequestSuccessMiddleware(store),
+      onRequestSuccessMiddleware(store, router, config.loginRouteName),
       onRequestErrorMiddleware);
 
     axiosInstance.interceptors.response.use(

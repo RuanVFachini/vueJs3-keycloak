@@ -1,7 +1,7 @@
 <template>
   <n-space vertical>
     <GlobalLoading/>
-    <n-layout has-sider>
+    <n-layout has-sider v-if="isAuthenticated">
       <AppSidebar />
       <n-layout>
         <n-space vertical>
@@ -13,6 +13,9 @@
           </NMessageProvider>
         </n-space>
       </n-layout>
+    </n-layout>
+    <n-layout v-else>
+      <router-view />
     </n-layout>
   </n-space>
 </template>
@@ -26,6 +29,8 @@ import AppSidebar from "@/shared/components/Sidear.vue";
 import LayoutHeader from '@/shared/components/LayoutHeader.vue';
 import GlobalLoading from '@/shared/components/GlobalLoading.vue';
 import { AuthState } from './plugins/auth-keycloak/auth.entities';
+import { mapGetters } from 'vuex';
+import { IS_AUTHENTICATED } from './plugins/auth-keycloak/store/keys';
 
 export default defineComponent({
   name: "App",
@@ -39,6 +44,8 @@ export default defineComponent({
     GlobalLoading,
   },
   computed: {
+    ...mapGetters([IS_AUTHENTICATED]),
+    
     pageName(): string  {
       return this.$router.currentRoute.value.name;
     }
