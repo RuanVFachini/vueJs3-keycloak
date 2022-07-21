@@ -8,20 +8,20 @@ services:
       - POSTGRESQL_DATABASE=bitnami_keycloak
     volumes:
       - "postgresql_data:/bitnami/postgresql"
-  keycloak:
-    image: docker.io/bitnami/keycloak:12-debian-10
-    environment:
-      - KEYCLOAK_CREATE_ADMIN_USER=true
-      - KEYCLOAK_ADMIN_USER=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KEYCLOAK_MANAGEMENT_USER=admin
-      - KEYCLOAK_MANAGEMENT_PASSWORD=admin
-    ports:
-      - 80:8080
-    depends_on:
-      - postgresql
-    volumes:
-      - "./keycloaktheme:/opt/bitnami/keycloak/themes/mynewtheme"
+  # keycloak:
+  #   image: docker.io/bitnami/keycloak:12-debian-10
+  #   environment:
+  #     - KEYCLOAK_CREATE_ADMIN_USER=true
+  #     - KEYCLOAK_ADMIN_USER=admin
+  #     - KEYCLOAK_ADMIN_PASSWORD=admin
+  #     - KEYCLOAK_MANAGEMENT_USER=admin
+  #     - KEYCLOAK_MANAGEMENT_PASSWORD=admin
+  #   ports:
+  #     - 80:8080
+  #   depends_on:
+  #     - postgresql
+  #   volumes:
+  #     - "./keycloaktheme:/opt/bitnami/keycloak/themes/mynewtheme"
 volumes:
   postgresql_data:
     driver: local

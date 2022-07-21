@@ -3,7 +3,7 @@ import cors from "cors";
 
 import indexRouter from "./routers/index";
 import studantRouter from "./routers/studants";
-import authentication from "./middlewares/authentication.middleware";
+import authentication from "./auth/middlewares/authentication.middleware";
 
 export class App {
   public server: express.Application;
