@@ -1,6 +1,5 @@
-export interface KeycloakUserInfoDto {
+export interface IdentityUserInfoDto {
     sub: string;
     preferred_username: string;
-    DOB: string;
     organization: string;
 }

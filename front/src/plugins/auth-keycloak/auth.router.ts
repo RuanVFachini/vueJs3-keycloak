@@ -75,7 +75,6 @@ function beforeLoginEnter(store: Store<AuthState>) {
       }
     } 
 
-    debugger
     if (!hasValues(params) && store.getters[IS_AUTHENTICATED]) {
       return next({ path: "/" });
     }
