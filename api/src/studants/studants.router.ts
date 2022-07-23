@@ -1,14 +1,11 @@
-import { Request, Response, Router } from "express";
-import * as core from 'express-serve-static-core';
+import { Router } from "express";
+import { controllerResolve } from "../request/controller.resolver";
+import { ServiceProvider } from "../request/service-provider.registration";
+import StudantController from "./studants.controller";
 
-// export class StudantsRouter {
-//     // var router = Router();
-
-//     router.get("/", (req: Request, res: Response) => {
-//       return res.json(studants);
-//     })
-
-//     export default router;
-
-// }
+export default function studantsRouter(container: ServiceProvider){
+    let router = Router();
+    router.get("/", controllerResolve(StudantController, "getAll", container));
+    return router;
+};
 

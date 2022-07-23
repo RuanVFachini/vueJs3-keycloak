@@ -1,13 +1,14 @@
 import { Request } from "express";
-import { RequestOptions } from "https";
-import { Ok } from "../request/response.types";
+import { ApiController } from "../request/api.controller";
+import { IActionResult } from "../request/response.types";
 
-export default class StudantController {
+export default class StudantController extends ApiController {
     
     constructor({ } : any) {
+        super();
     }
 
-    public getAll(opts: RequestOptions) {
-        return new Ok();
+    public getAll(request: Request) : IActionResult {
+        return this.ok("Olá mundo");
     }
 }
