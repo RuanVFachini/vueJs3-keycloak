@@ -1,6 +1,6 @@
-import { App } from "./app";
+import { createServer } from "./app";
 import dotenv from "dotenv";
 
 dotenv.config({path: ".env"});
 
-new App().server.listen(3005);
+createServer().listen(3005);

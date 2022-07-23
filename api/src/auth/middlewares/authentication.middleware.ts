@@ -1,9 +1,12 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { IdentityUserInfoService } from "../services/identity.service";
 
 export default async (req: Request, res: Response, next: () => any): Promise<void> => {
     await new IdentityUserInfoService().getUserinfoIdentityByToken(req.headers.authorization)
-        .catch(response => setUnauthorizedStatus(res));
+    .then(response => {
+        
+    })
+    .catch(response => setUnauthorizedStatus(res));
 
     next();
 }
