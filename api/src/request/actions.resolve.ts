@@ -1,14 +1,15 @@
 import { Response } from "express";
+import { StatusCode } from "../shared/types/status-code.type";
 import { IActionResult } from "./response.types";
 
 export function resolveActionResponse(actionResponse: IActionResult, response: Response) {
     response.statusCode = actionResponse.statusCode;
   
     switch (actionResponse.statusCode) {
-      case 200:
+      case StatusCode.OK:
         defaultActionResponse(actionResponse, response);
         break;
-      case 400:
+      case StatusCode.BadRequest:
         return (response: Response) => {
           let errors = []
 
@@ -22,7 +23,7 @@ export function resolveActionResponse(actionResponse: IActionResult, response: R
             errors: errors,
           });
         };
-      case 404:
+      case StatusCode.NotFound:
         defaultActionResponse(actionResponse, response);
         break;
     } 

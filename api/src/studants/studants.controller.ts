@@ -9,6 +9,6 @@ export default class StudantController extends ApiController {
     }
 
     public getAll(request: Request) : IActionResult {
-        return this.ok("Olá mundo");
+        return this.ok("teste");
     }
 }

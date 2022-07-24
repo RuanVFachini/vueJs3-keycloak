@@ -5,7 +5,7 @@ import StudantController from "./studants.controller";
 
 export default function studantsRouter(container: ServiceProvider){
     let router = Router();
-    router.get("/", controllerResolve(StudantController, "getAll", container));
+    router.get("/", controllerResolve(StudantController, "getAll", container, ["NONE"]));
     return router;
 };
 

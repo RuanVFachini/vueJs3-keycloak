@@ -1,8 +1,4 @@
-export enum StatusCode{
-  success = 200,
-  badRequest = 400,
-  internaServerError = 401,
-}
+import { StatusCode } from "../../types/status-code.type";
 
 interface Error {
   message: string;

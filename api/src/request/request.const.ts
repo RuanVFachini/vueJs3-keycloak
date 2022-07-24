@@ -1,0 +1,1 @@
+export const SERVICE_PROVIDER = "service_provider";

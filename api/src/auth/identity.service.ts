@@ -1,11 +1,11 @@
 import axios from "axios";
-import { IdentityUserInfoDto } from "../dtos/identity.dtos";
-import { IIdentityUserInfoService } from "../interfaces/i-identity.service";
-import authConfig from "../configs/auth.config";
+import authConfig from "./auth.config";
+import { IIdentityUserInfoService } from "./i-identity.service";
+import { IdentityUserInfoDto } from "./identity.dtos";
 
 export class IdentityUserInfoService implements IIdentityUserInfoService {
     
-    getUserinfoIdentityByToken(authorization: string | undefined): Promise<IdentityUserInfoDto | undefined> {
+    getUserinfoIdentityByToken(authorization: string | undefined): Promise<IdentityUserInfoDto> {
         const server = authConfig.keycloakHost;
         const port = authConfig.keycloakPort;
         const realm = authConfig.keycloakRealmName;
@@ -19,7 +19,7 @@ export class IdentityUserInfoService implements IIdentityUserInfoService {
         }).then(resp => {
             return resp.data;
         }).catch(resp => {
-            return undefined
+            throw resp;
         });
     }
 
